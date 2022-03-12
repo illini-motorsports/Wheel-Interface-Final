@@ -1,7 +1,6 @@
 #include <ASTCanLib.h>
 #include "Switch.h"
 uint8_t sendData[8];
-//uint8_t txBuffer[8];
 
 // For all the debounce checks
 unsigned long current_time = 0; // updated every loop (in void loop())
@@ -128,9 +127,7 @@ void button2() { // 19
         }
       }
     }
-
     lastBut[1] = readBut1;
-
   }
 
 }
@@ -157,9 +154,7 @@ void button3() { // 120
         }
       }
     }
-
     lastBut[2] = readBut1;
-
   }
 
 }
@@ -199,7 +194,7 @@ void setup() {
 
   canInit(1000000); // init CAN port
   Serial.begin(9600);
-  txMsg.pt_data = &sendData[0]; // reference massage data to transmit buffer
+  txMsg.pt_data = &sendData[0]; // reference message data to sendData
 
   // initialize the pins
   pinMode(2, INPUT_PULLUP);
@@ -240,10 +235,6 @@ void loop() {
   button3();
   button4();
 
-  //  load data into tx buffer
-  /*for (int i = 0; i < 8 ; i++) {
-    txBuffer[i] = sendData[i];
-  }*/
   // Setup CAN packet.
   txMsg.ctrl.ide = MESSAGE_PROTOCOL;  // Set CAN protocol (0: CAN 2.0A, 1: CAN 2.0B)
   txMsg.id.ext   = MESSAGE_ID;        // Set message ID
